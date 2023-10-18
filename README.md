@@ -1,203 +1,91 @@
-# CPP-Basic_RoadMapByRM : Chapter-1 Basic Operations
+# CPP-Basic_RoadMapByRM : Chapter-2 Functions
 
-## Arithmetic Operators in C++
-
-### Addition (+)
+## Functions in C++
 ```cpp
-int a = 5, b = 10;
-int sum = a + b;  // sum will be 15
-```
+#include <iostream>
 
-### Subtraction (-)
-```cpp
-int a = 15, b = 10;
-int difference = a - b;  // difference will be 5
-```
+// Function prototype
+int add(int, int); 
 
-### Multiplication (*)
-```cpp
-int a = 5, b = 4;
-int product = a * b;  // product will be 20
-```
+int main() {
+    int result = add(5, 7);
+    std::cout << "The sum is: " << result << std::endl;
+    return 0;
+}
 
-### Division (/)
-```cpp
-int a = 20, b = 4;
-int quotient = a / b;  // quotient will be 5
-
-double c = 22.0, d = 7.0;
-double result = c / d;  // result will be an approximation of 3.142857
-```
-
-### Modulus (%)
-```cpp
-int a = 10, b = 3;
-int remainder = a % b;  // remainder will be 1
-```
-
-### Increment (++)
-```cpp
-int a = 5;
-a++;  // a will be 6
-```
-
-### Decrement (--)
-```cpp
-int a = 5;
-a--;  // a will be 4
-```
-
-## Logical Operators in C++
-
-### Logical AND (&&)
-```cpp
-bool a = true, b = false;
-bool result = a && b;  // result will be false
-```
-
-### Logical OR (||)
-```cpp
-bool a = true, b = false;
-bool result = a || b;  // result will be true
-```
-
-### Logical NOT (!)
-```cpp
-bool a = true;
-bool result = !a;  // result will be false
-```
-
-Let's take a look at a practical example where these operators might be used:
-
-```cpp
-std::string username = "user123";
-std::string password = "pass123";
-
-bool isUsernameValid = (username == "user123");
-bool isPasswordValid = (password == "pass123");
-
-if (isUsernameValid && isPasswordValid) {
-    std::cout << "Logged in successfully!" << std::endl;
-} else {
-    std::cout << "Invalid credentials!" << std::endl;
+// Function definition
+int add(int a, int b) {
+    return a + b;
 }
 ```
 
-## Loops in C++
-
-### For Loop
+## Lambda Functions in C++
+The general syntax for lambda functions is:
 ```cpp
-for (int i = 0; i < 5; i++) {
-    std::cout << i << std::endl;
-}
-// Output:
-// 0
-// 1
-// 2
-// 3
-// 4
+[capture](parameters) -> return_type { body_of_lambda }
+```
+- capture: This captures external variables for use inside the lambda.
+- parameters: Like regular functions, you can pass arguments to lambdas.
+- return_type: This is optional and if skipped, it's inferred from the return statements in the lambda.
+- body_of_lambda: The code that the lambda will execute.
+
+### 1. A Simple Lambda
+```cpp
+auto simpleLambda = []() {
+    std::cout << "Hello from Lambda!" << std::endl;
+};
+
+simpleLambda();  // Outputs: Hello from Lambda!
 ```
 
-### While Loop:
+### 2. Lambda with Parameters
 ```cpp
-int i = 0;
-while (i < 5) {
-    std::cout << i << std::endl;
-    i++;
-}
-// Output is the same as the for loop above.
+auto add = [](int a, int b) {
+    return a + b;
+};
+
+std::cout << add(3, 4);  // Outputs: 7
 ```
 
-### Do-While Loop
+### 3. Lambda with Explicit Return Type
 ```cpp
-int i = 0;
-do {
-    std::cout << i << std::endl;
-    i++;
-} while (i < 5);
-// Output is the same as the above loops.
-```
-
-### Nested Loops
-```cpp
-for (int i = 0; i < 3; i++) {
-    for (int j = 0; j < 3; j++) {
-        std::cout << "[" << i << "][" << j << "] ";
+auto divide = [](double a, double b) -> double {
+    if (b == 0.0) {
+        return 0.0;  // Handle division by zero
     }
-    std::cout << std::endl;
-}
-// Output:
-// [0][0] [0][1] [0][2] 
-// [1][0] [1][1] [1][2] 
-// [2][0] [2][1] [2][2]
+    return a / b;
+};
+
+std::cout << divide(5.0, 2.0);  // Outputs: 2.5
 ```
 
-### Infinite Loops
+### 4. Lambda with Captures
 ```cpp
-while (true) {
-    // This loop will run indefinitely.
-}
+int x = 10;
+int y = 20;
+
+auto addXY = [x, y]() {
+    return x + y;
+};
+
+std::cout << addXY();  // Outputs: 30
 ```
 
-Or
+There are other ways to capture, such as:
+[=]: Capture all local variables by value.
+[&]: Capture all local variables by reference.
+[x, &y]: Capture x by value and y by reference.
+
+### 5. Lambdas as Function Arguments
 ```cpp
-for (;;) {
-    // This is also an infinite loop.
-}
-```
+std::vector<int> numbers = {5, 2, 8, 1, 3};
 
-## Bitwise Operations
+std::sort(numbers.begin(), numbers.end(), [](int a, int b) {
+    return a > b;
+});
 
-### Bitwise AND (&)
-```cpp
-int a = 5;  // Binary: 0101
-int b = 3;  // Binary: 0011
-int result = a & b;  // Result: 0001, which is 1 in decimal
-```
-
-### Bitwise OR (|)
-```cpp
-int a = 5;  // Binary: 0101
-int b = 3;  // Binary: 0011
-int result = a | b;  // Result: 0111, which is 7 in decimal
-```
-
-### Bitwise XOR (^)
-```cpp
-int a = 5;  // Binary: 0101
-int b = 3;  // Binary: 0011
-int result = a ^ b;  // Result: 0110, which is 6 in decimal
-```
-
-### Bitwise NOT (~)
-```cpp
-int a = 5;  // Binary: 0101
-int result = ~a;  // Result will invert every bit: 1010
-// Note: Due to how two's complement works, the value might be interpreted differently.
-```
-
-### Left Shift (<<)
-```cpp
-int a = 5;  // Binary: 0101
-int result = a << 1;  // Result: 1010, which is 10 in decimal
-```
-
-### Right Shift (>>)
-```cpp
-int a = 5;  // Binary: 0101
-int result = a >> 1;  // Result: 0010, which is 2 in decimal
-```
-
-Example
-```cpp
-int number = 5;        // Binary: 0101
-int mask = 1 << 2;     // Binary: 0100
-bool isBitSet = (number & mask) != 0;
-
-if (isBitSet) {
-    std::cout << "The 3rd bit is set!" << std::endl;
-} else {
-    std::cout << "The 3rd bit is not set!" << std::endl;
+for (int n : numbers) {
+    std::cout << n << " ";  // Outputs: 8 5 3 2 1
 }
 ```
 
